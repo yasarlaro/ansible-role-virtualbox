@@ -11,7 +11,7 @@ Host OS CPU has to support virtualization. Role also performs a check against it
 Role Variables
 --------------
 
-Role had only one variable: `virtualbox_version`. Please change with the version you would like to use.
+Role has only one variable: `virtualbox_version`. Please change it with the version you would like to use.
 
 Dependencies
 ------------
