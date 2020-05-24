@@ -1,0 +1,22 @@
+galaxy_info:
+  author: Onur Yasarlar
+  description: Installs VirtualBox on Centos 7 / Centos 8
+  company: Onur Lab
+  role_name: virtualbox
+
+  license: license MIT
+
+  min_ansible_version: 2.7
+
+  platforms:
+  - name: EL
+    versions:
+    - 7
+    - 8
+
+  galaxy_tags:
+    - virtualbox
+    - centos7
+    - centos8
+
+dependencies: []
