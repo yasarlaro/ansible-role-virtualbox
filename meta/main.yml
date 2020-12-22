@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Onur Yasarlar
-  description: Installs VirtualBox on Centos 7 / Centos 8
+  description: Installs VirtualBox on Centos 7 / Centos 8 / Ubuntu 18
   company: Onur Lab
   role_name: virtualbox
 
