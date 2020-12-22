@@ -1,51 +1,11 @@
 ---
-# tasks file for virtualbox
-- name: "Perform prelim tasks"
-  include_tasks: "prelim.yml"
+- name: CPU support checks
+  include_tasks: prereq.yaml
 
-- name: Running tasks require privilege
-  block:
-    # yum_repository module does not allow to only enable a yum_repository
-    # so I deploy full repo file instead
-    - name: "Enable PowerTools repository"
-      copy:
-        src: CentOS-PowerTools.repo
-        dest: "/etc/yum.repos.d/CentOS-PowerTools.repo"
-        owner: "root"
-        group: "root"
-        mode: "0644"
-      when: ansible_facts['distribution_major_version'] == "8"
+- name: Install and Configure for CentOS
+  include_tasks: centos.yaml
+  when: ansible_distribution == "CentOS"
 
-    - name: "Install prerequisite packages"
-      package:
-        name:
-          - "gcc"
-          - "make"
-          - "perl"
-          - "kernel-devel"
-          - "kernel-headers"
-          - "elfutils-libelf-devel"
-          - "xorg-x11-xauth"
-          - "xorg-x11-apps"
-        state: present
-
-    - name: "Add VirtualBox repository"
-      yum_repository:
-        name: "virtualbox"
-        description: "OEL / RHEL / CentOS-$releasever / $basearch - VirtualBox"
-        baseurl: "http://download.virtualbox.org/virtualbox/rpm/el/$releasever/$basearch"
-        gpgkey: "https://www.virtualbox.org/download/oracle_vbox.asc"
-        gpgcheck: "yes"
-        repo_gpgcheck: "yes"
-
-    - name: Import VirtualBox repo GPG key
-      rpm_key:
-        state: present
-        key: https://www.virtualbox.org/download/oracle_vbox.asc
-
-    - name: "Install VirtualBox-{{ virtualbox_version }}"
-      yum:
-        name: "VirtualBox-{{ virtualbox_version }}"
-        state: present
-  become: true
-
+- name: Install and Configure for Ubuntu
+  include_tasks: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"

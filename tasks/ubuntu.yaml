@@ -1,0 +1,28 @@
+---
+- name: Install prereq packages
+  apt:
+    name:
+      - build-essential
+      - dkms
+      - unzip
+    state: present
+    update_cache: true
+
+- name: Add VirtualBox repo keys
+  apt_key:
+    url: "https://www.virtualbox.org/download/{{ item }}.asc"
+    state: present
+  loop:
+    - oracle_vbox
+    - oracle_vbox_2016
+
+- name: Add VirtualBox repo
+  apt_repository:
+    repo: 'deb https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib'
+    state: present
+    update_cache: true
+
+- name: "Install virtualbox in version {{ virtualbox_version }}"
+  apt:
+    name: virtualbox-{{ virtualbox_version }}
+    state: present
